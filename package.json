@@ -1,0 +1,9 @@
+{
+  "name": "appsyncdiscovery",
+  "version": "1.0.0",
+  "description": "AppSync Discovery",
+  "main": "/bin/index.js",
+  "repository": "https://github.com/katesclau/appsyncdiscovery.git",
+  "author": "Diego Ferreira <katesclau@gmail.com>",
+  "license": "MIT"
+}
