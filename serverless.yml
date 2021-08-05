@@ -111,5 +111,8 @@ resources:
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool
 
+    UserPoolClientId:
+      Value: !Ref UserPoolClient
+
     UsersTable:
       Value: !Ref UsersTable

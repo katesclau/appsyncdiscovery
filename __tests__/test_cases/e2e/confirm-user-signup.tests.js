@@ -1,17 +1,15 @@
 const given = require('../../steps/given');
 const when = require('../../steps/when');
 const then = require('../../steps/then');
-const chance = require('chance').Chance();
 
 describe('When a user signs up', () => {
   it("The user's profile should be saved in the DynamoDB", async () => {
-    const { name, email } = given.a_random_user()
-    const username = chance.guid();
+    const { name, email, password } = given.a_random_user()
 
-    await when.we_invoke_confirmUserSignup(username, name, email)
-    const ddbUser = await then.user_exists_in_UsersTable(username);
+    const user = await when.a_user_signs_up(password, name, email)
+    const ddbUser = await then.user_exists_in_UsersTable(user.username);
     expect(ddbUser).toMatchObject({
-      id: username,
+      id: user.username,
       name,
       createdAt: expect.stringMatching(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?Z?/g),
       followersCount: 0,
@@ -24,6 +22,6 @@ describe('When a user signs up', () => {
     expect(ddbUser.screenName).toContain(firstName)
     expect(ddbUser.screenName).toContain(lastName)
 
-    await then.remove_user_from_UsersTable(username)
+    await then.remove_user(user.username)
   })
 })

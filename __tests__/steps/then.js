@@ -20,14 +20,20 @@ const user_exists_in_UsersTable = async (id) => {
   }
 }
 
-const remove_user_from_UsersTable = async (id) => {
+const remove_user = async (id) => {
   const DynamoDB = new AWS.DynamoDB.DocumentClient();
+  const cognito = new AWS.CognitoIdentityServiceProvider()
+  const userPoolId = process.env.COGNITO_USER_POOL_ID
   try {
     await DynamoDB.delete({
       TableName: process.env.USERS_TABLE,
       Key: {
         id
       }
+    }).promise()
+    await cognito.adminDeleteUser({
+      UserPoolId: userPoolId,
+      Username: id
     }).promise()
   } catch (error) {
     console.log(error)
@@ -36,5 +42,5 @@ const remove_user_from_UsersTable = async (id) => {
 
 module.exports = {
   user_exists_in_UsersTable,
-  remove_user_from_UsersTable
+  remove_user
 }
