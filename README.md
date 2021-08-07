@@ -6,6 +6,9 @@ https://docs.aws.amazon.com/appsync/latest/devguide/resolver-mapping-template-re
 `$util` reference
 https://docs.aws.amazon.com/appsync/latest/devguide/resolver-util-reference.html
 
+## Testing templates with 
+$util.error("Test Error", $util.toJson($ctx))
+
 ## References
 https://www.simpleorientedarchitecture.com/test-strategy-for-continuous-delivery/
 https://github.com/theburningmonk/appsyncmasterclass-backend

@@ -9,10 +9,6 @@ describe('Given an authenticated user', () => {
     user = await given.an_authenticated_user()
   })
 
-  afterAll(async () => {
-    await then.remove_user(user.username)
-  })
-
   it('The user can  fetch his profile with getMyProfile', async () => {
     const profile = await when.a_user_calls_getMyProfile(user)
     const { username, name } = user;
@@ -38,5 +34,7 @@ describe('Given an authenticated user', () => {
     const [firstName, lastName] = name.split(' ')
     expect(profile.screenName).toContain(firstName)
     expect(profile.screenName).toContain(lastName)
+  
+    await then.remove_user(username)
   })
 })

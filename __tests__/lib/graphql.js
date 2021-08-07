@@ -1,7 +1,6 @@
 const axios = require('axios')
 
 const throwOnErrors = ({ query, variables, errors }) => {
-
   if(errors) {
     const errorMessage = `  
       query: ${query.substring(0, 100)},
@@ -19,7 +18,7 @@ module.exports = async (url, query, variables = {}, auth) => {
   }
 
   try {
-    const resp = await http({
+    const resp = await axios({
       method: 'post',
       url,
       headers,
@@ -28,10 +27,12 @@ module.exports = async (url, query, variables = {}, auth) => {
         variables: JSON.stringify(variables)
       },
     })
-    const { data, errors } = resp;
+    const { data: { data, errors } } = resp;
+    console.log(data)
     throwOnErrors({ query, variables, errors })
     return data
   } catch (err) {
+    console.log(err)
     const errors = err.response? err.response.data.errors : []
     throwOnErrors({ query, variables, errors })
     throw err
