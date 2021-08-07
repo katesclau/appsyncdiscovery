@@ -9,7 +9,10 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^26.0.24",
+    "amplify-appsync-simulator": "^1.27.6",
+    "amplify-velocity-template": "^1.4.5",
     "aws-sdk": "^2.959.0",
+    "axios": "^0.21.1",
     "chance": "^1.1.7",
     "dotenv": "^10.0.0",
     "jest": "^27.0.6",
@@ -20,8 +23,8 @@
   },
   "scripts": {
     "sls": "sls",
-    "integration-test": "jest --verbose ./__tests__/test_cases/integration/**",
-    "unit-test": "jest --verbose ./__tests__/test_cases/unit/**",
-    "e2e-test": "jest --verbose ./__tests__/test_cases/e2e/**"
+    "test:integration": "jest --verbose ./__tests__/test_cases/integration/**",
+    "test:unit": "jest --verbose ./__tests__/test_cases/unit/**",
+    "test:e2e": "jest --verbose ./__tests__/test_cases/e2e/**"
   }
 }
