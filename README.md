@@ -9,6 +9,12 @@ https://docs.aws.amazon.com/appsync/latest/devguide/resolver-util-reference.html
 ## Testing templates with 
 $util.error("Test Error", $util.toJson($ctx))
 
+## Grabbing outputs from Cloudformation
+You can use `serverless-manifest` plugin for it, along with `appsyncdiscovery\processManifest.js` to provide functions with the outputs.
+
+## DynamoDB Mapping examples
+https://docs.aws.amazon.com/appsync/latest/devguide/resolver-mapping-template-reference-dynamodb.html#aws-appsync-resolver-mapping-template-reference-dynamodb-updateitem
+
 ## References
 https://www.simpleorientedarchitecture.com/test-strategy-for-continuous-delivery/
 https://github.com/theburningmonk/appsyncmasterclass-backend

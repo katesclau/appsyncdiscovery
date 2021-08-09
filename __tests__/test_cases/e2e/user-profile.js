@@ -12,7 +12,6 @@ describe('Given an authenticated user', () => {
   it('The user can  fetch his profile with getMyProfile', async () => {
     const profile = await when.a_user_calls_getMyProfile(user)
     const { username, name } = user;
-    console.log('profile', profile)
     expect(profile).toMatchObject({
       id: username,
       name,
@@ -34,7 +33,34 @@ describe('Given an authenticated user', () => {
     const [firstName, lastName] = name.split(' ')
     expect(profile.screenName).toContain(firstName)
     expect(profile.screenName).toContain(lastName)
-  
-    await then.remove_user(username)
+  })
+
+  it('The user can edit his profile with edittMyProfile', async () => {
+    const input = {
+      name: chance.name(),
+      bio: chance.paragraph(),
+    }
+    const profile = await when.a_user_calls_editMyProfile(user, input)
+    const { username, name } = user;
+    expect(profile).toMatchObject({
+      id: username,
+      name: input.name,
+      imageUrl: null,
+      backgroundImageUrl: null,
+      bio: input.bio,
+      location: null,
+      website: null,
+      birthdate: null,
+      createdAt: expect.stringMatching(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?Z?/g),
+      // tweets: TweetsPage!
+      followersCount: 0,
+      followingCount: 0,
+      tweetsCount: 0,
+      likesCount: 0
+    })
+
+    const [firstName, lastName] = name.split(' ')
+    expect(profile.screenName).toContain(firstName)
+    expect(profile.screenName).toContain(lastName)
   })
 })

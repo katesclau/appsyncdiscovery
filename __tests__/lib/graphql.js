@@ -7,6 +7,7 @@ const throwOnErrors = ({ query, variables, errors }) => {
       variables: ${JSON.stringify(variables, null, 2)},
       errors: ${JSON.stringify(errors, null, 2)}
     `
+    console.log(errorMessage)
     throw new Error(errorMessage)
   }
 }
@@ -28,11 +29,9 @@ module.exports = async (url, query, variables = {}, auth) => {
       },
     })
     const { data: { data, errors } } = resp;
-    console.log(data)
     throwOnErrors({ query, variables, errors })
     return data
   } catch (err) {
-    console.log(err)
     const errors = err.response? err.response.data.errors : []
     throwOnErrors({ query, variables, errors })
     throw err

@@ -11,10 +11,14 @@ mappingTemplates:
     field: getMyProfile
     dataSource: usersTable
 
+  - type: Mutation
+    field: editMyProfile
+    dataSource: usersTable
+
 dataSources:
   - type: NONE
     name: none
   - type: AMAZON_DYNAMODB
     name: usersTable
-    config: 
+    config:
       tableName: !Ref UsersTable
