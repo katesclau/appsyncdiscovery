@@ -28,5 +28,8 @@
     "test:integration": "jest --verbose ./__tests__/test_cases/integration/**",
     "test:unit": "jest --verbose ./__tests__/test_cases/unit/**",
     "test:e2e": "jest --verbose ./__tests__/test_cases/e2e/**"
+  },
+  "dependencies": {
+    "ulid": "^2.3.0"
   }
 }
