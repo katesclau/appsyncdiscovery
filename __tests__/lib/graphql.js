@@ -1,13 +1,13 @@
-const axios = require('axios')
+const http = require('axios')
+const _ = require('lodash')
 
-const throwOnErrors = ({ query, variables, errors }) => {
-  if(errors) {
-    const errorMessage = `  
-      query: ${query.substring(0, 100)},
-      variables: ${JSON.stringify(variables, null, 2)},
-      errors: ${JSON.stringify(errors, null, 2)}
-    `
-    console.log(errorMessage)
+const throwOnErrors = ({query, variables, errors}) => {
+  if (errors) {
+    const errorMessage = `
+query: ${query.substr(0, 100)}
+variables: ${JSON.stringify(variables, null, 2)}
+error: ${JSON.stringify(errors, null, 2)}
+    `    
     throw new Error(errorMessage)
   }
 }
@@ -19,20 +19,21 @@ module.exports = async (url, query, variables = {}, auth) => {
   }
 
   try {
-    const resp = await axios({
+    const resp = await http({
       method: 'post',
       url,
       headers,
       data: {
         query,
         variables: JSON.stringify(variables)
-      },
+      }
     })
-    const { data: { data, errors } } = resp;
+  
+    const { data, errors } = resp.data
     throwOnErrors({ query, variables, errors })
     return data
   } catch (err) {
-    const errors = err.response? err.response.data.errors : []
+    const errors = _.get(err, 'response.data.errors')
     throwOnErrors({ query, variables, errors })
     throw err
   }
