@@ -11,7 +11,7 @@ describe('Query.getMyProfile.request template', () => {
     const username = chance.guid()
 
     const context = given.an_appsync_context({ username })
-    const result = when.we_invole_an_appsync_template(templatePath, context)
+    const result = when.we_invoke_an_appsync_template(templatePath, context)
 
     expect(result).toEqual({ 
       "version" : "2018-05-29",

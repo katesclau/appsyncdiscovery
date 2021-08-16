@@ -7,6 +7,8 @@ userPoolConfig:
   userPoolId: !Ref CognitoUserPool
 mappingTemplatesLocation: mapping-templates
 mappingTemplates:
+
+  # Queries
   - type: Query
     field: getMyProfile
     dataSource: usersTable
@@ -15,7 +17,11 @@ mappingTemplates:
     dataSource: getImageUploadUrlFunction
     request: false
     response: false
+  - type: Query
+    field: getTweets
+    dataSource: tweetsTable
 
+  # Mutations
   - type: Mutation
     field: editMyProfile
     dataSource: usersTable
@@ -24,6 +30,11 @@ mappingTemplates:
     dataSource: tweetFunction
     request: false
     response: false
+
+  # Nested Resolvers
+  - type: Tweet
+    field: profile
+    dataSource: usersTable
 
 dataSources:
   - type: NONE

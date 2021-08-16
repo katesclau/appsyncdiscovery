@@ -23,7 +23,5 @@ describe('When confirmUserSignup runs', () => {
     const [firstName, lastName] = name.split(' ')
     expect(ddbUser.screenName).toContain(firstName)
     expect(ddbUser.screenName).toContain(lastName)
-
-    await then.remove_user_from_UsersTable(username)
   })
 })

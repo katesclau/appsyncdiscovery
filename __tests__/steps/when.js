@@ -65,7 +65,7 @@ const a_user_signs_up = async (password, name, email) => {
   }
 }
 
-const we_invole_an_appsync_template = (templatePath, context) => { 
+const we_invoke_an_appsync_template = (templatePath, context) => { 
   const template = fs.readFileSync(templatePath, { encoding: 'utf-8' })
   const ast = velocityTemplate.parse(template);
   const compiler = new velocityTemplate.Compile(ast, {
@@ -170,12 +170,53 @@ const a_user_calls_getImageUploadUrl = async (user, extension, contentType) => {
   return url
 }
 
+const we_invoke_tweet = async (username, text) => {
+  const handler = require('../../functions/tweet').handler
+
+  const context = {}
+  const event = {
+    identity: {
+      username
+    },
+    arguments: {
+      text
+    }
+  }
+
+  return await handler(event, context)
+}
+
+const a_user_calls_tweet = async (user, text) => {
+  const tweet = `mutation tweet($text: String!) {
+    tweet(text: $text) {
+      id
+      createdAt
+      text
+      replies
+      likes
+      retweets
+    }
+  }`
+  const variables = {
+    text
+  }
+
+  const data = await GraphQL(process.env.API_URL, tweet, variables, user.accessToken)
+  const newTweet = data.tweet
+
+  console.log(`[${user.username}] - posted new tweet`)
+
+  return newTweet
+}
+
 module.exports = {
   we_invoke_confirmUserSignup,
   a_user_signs_up,
-  we_invole_an_appsync_template,
+  we_invoke_an_appsync_template,
   we_invoke_getImageUploadUrl,
   a_user_calls_getMyProfile,
   a_user_calls_editMyProfile,
   a_user_calls_getImageUploadUrl,
+  we_invoke_tweet,
+  a_user_calls_tweet
 }
